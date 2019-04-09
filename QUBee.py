@@ -486,7 +486,8 @@ else:
 vehicle.mode = VehicleMode("RTL")
 
 print('Mission done')
-print('The target is a %s at:' % character)
-del targetGPS[2]
-print(targetGPS)
+if haveTarget == True:
+  print('The target is a %s at:' % character)
+  del targetGPS[2]
+  print(targetGPS)
 vehicle.close()
