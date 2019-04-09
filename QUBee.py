@@ -399,7 +399,8 @@ while vehicle.mode.name != "AUTO":
 print('Entering autonomous navigation mode')
 
 #Do navigation of waypoints - tolerence of 12m radius - based on min turn rate with payload
-fly(route, 18, 12, True)
+if vehicle.mode.name != "MANUAL":
+  fly(route, 18, 12, True)
 
 # Run detection algorithm while aircraft is flying through waypoints the first time
 (counter, positions, headings, centres) = detection(route)
@@ -419,7 +420,8 @@ try:
 except:
   print('Target not found, doing another pass')
   #Do another pass by of waypoints but slower and scan for target again
-  fly(route, 15, 12, False)
+  if vehicle.mode.name != "MANUAL":
+    fly(route, 15, 12, False)
   (counter, positions, headings, centres) = detection(route)
   
   #Try and process target information again
@@ -441,12 +443,14 @@ except:
 #If the target has been acquired, do payload drop and speed lap  
 if haveTarget == True:
 
-  #Drop payload at target gps coords from 20m
-  payloadDrop(targetGPS, 20)
+  if vehicle.mode.name != "MANUAL":
+    #Drop payload at target gps coords from 20m
+    payloadDrop(targetGPS, 20)
   
-  #Send speed laps commands to do - at 30m/s and with a 10m radius tolerance
-  fly(route, 30, 10, False)
-  print('Doing speed lap')
+  if vehicle.mode.name != "MANUAL":
+    #Send speed laps commands to do - at 30m/s and with a 10m radius tolerance
+    fly(route, 30, 10, False)
+    print('Doing speed lap')
 
   #Perform character recognition on saved images
   character = recognition(counter)
