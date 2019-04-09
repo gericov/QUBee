@@ -193,9 +193,9 @@ def detection(route):
                 # Convert the image to grayscale and turn to outline of  the letter
                 g_rotated = cv2.cvtColor(rotated, cv2.COLOR_BGR2GRAY)
                 b_rotated = cv2.GaussianBlur(g_rotated, (5, 5), 0)
-                t_rotated = cv2.adaptiveThreshold(b_rotated, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY_INV, 11, 0)
+                t_rotated = cv2.adaptiveThreshold(b_rotated, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY, 11, 0)
                 kernel = np.ones((4, 4), np.uint8)
-                ee = cv2.morphologyEx(t_rotated, cv2.MORPH_CLOSE, kernel)
+                ee = cv2.morphologyEx(t_rotated, cv2.MORPH_OPEN, kernel)
                 e_rotated = cv2.Canny(b_rotated, 50, 100)
 
                 # uses the outline to detect the corners for the cropping of the image
